@@ -37,8 +37,9 @@ class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _textController = TextEditingController.fromValue(
       TextEditingValue(text: "Initial value"),
       );
-
-final _keyForm = GlobalKey<FormState>();
+  final _keyForm = GlobalKey<FormState>();
+  final _firstFieldKey = GlobalKey<FormFieldState>();
+  final _secondFieldKey = GlobalKey<FormFieldState>();
 
   @override
   void initState() {
@@ -109,8 +110,8 @@ final _keyForm = GlobalKey<FormState>();
                 onPressed: () {
                   if (_keyForm.currentState?.validate() ?? false) {
                     debugPrint('Form is valid');
-                    //debugPrint('First field value: ${_keyForm.currentState?.fields['firstField']?.value}');
-                    //debugPrint('Second field value: ${_keyForm.currentState?.fields['secondField']?.value}');
+                    debugPrint('First field value: ${_firstFieldKey.currentState?.value}');
+                    debugPrint('Second field value: ${_secondFieldKey.currentState?.value}');
                     debugPrint('Text field value: ${_textController.text}');
                   } else {
                     debugPrint('Form is invalid');
@@ -131,9 +132,6 @@ final _keyForm = GlobalKey<FormState>();
   }
   
   Widget getForm(GlobalKey<FormState> keyForm) {
-    final firstFieldKey = GlobalKey<FormFieldState>();
-    final secondFieldKey = GlobalKey<FormFieldState>();
-    
     return Form(
       key: keyForm,
       child: Column(
@@ -141,7 +139,7 @@ final _keyForm = GlobalKey<FormState>();
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: TextFormField(
-              key: firstFieldKey,
+              key: _firstFieldKey,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'First Field',
@@ -151,7 +149,7 @@ final _keyForm = GlobalKey<FormState>();
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: TextFormField(
-              key: secondFieldKey,
+              key: _secondFieldKey,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Second Field',
@@ -165,8 +163,8 @@ final _keyForm = GlobalKey<FormState>();
                 print("valid: $valid");
 
                 if (valid) {
-                  debugPrint('First field value: ${firstFieldKey.currentState?.value}');
-                  debugPrint('Second field value: ${secondFieldKey.currentState?.value}');
+                  debugPrint('First field value: ${_firstFieldKey.currentState?.value}');
+                  debugPrint('Second field value: ${_secondFieldKey.currentState?.value}');
                 }
               },
               child: const Text("Validate"),
